@@ -1,9 +1,8 @@
 import cv2
-import math
 import numpy as np
 
 
-def get_grad_hist(img_array, point, distance=3, bins=20):
+def get_grad_hist(img_array, point, distance=3, bins=10):
     sobel_x = cv2.Sobel(img_array, cv2.CV_32F, 1, 0, 1)
     sobel_y = cv2.Sobel(img_array, cv2.CV_32F, 0, 1, 1)
 
@@ -31,3 +30,14 @@ def get_grad_hist(img_array, point, distance=3, bins=20):
     for i in hist_list_raw:
         ret_list.append(round((i / divisor) * 100, 3))
     return ret_list
+
+
+def variance_check(lefthand: list, righthand: list):
+    if len(lefthand) != len(righthand):
+        raise ValueError("comparing object differs in size")
+    diff_sum = 0
+    for i in range(len(lefthand)):
+        diff = lefthand[i] - righthand[i]
+        diff_sum += diff * diff
+    print(diff_sum)
+    return diff_sum
