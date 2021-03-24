@@ -39,5 +39,5 @@ def variance_check(lefthand: list, righthand: list):
     for i in range(len(lefthand)):
         diff = lefthand[i] - righthand[i]
         diff_sum += diff * diff
-    print(diff_sum)
+
     return diff_sum

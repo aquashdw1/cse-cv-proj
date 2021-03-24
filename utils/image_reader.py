@@ -32,3 +32,6 @@ class ImageReader:
         cv2.imshow("{}_focus".format(self.name), temp_image)
         cv2.waitKey(0)
         cv2.destroyWindow(self.name)
+
+    def draw_line(self, start, end):
+        cv2.line(self.image_array, start, end, (0, 0, 255), thickness=3,)
