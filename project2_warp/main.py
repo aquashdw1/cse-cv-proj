@@ -3,7 +3,7 @@ import numpy as np
 from utils.image_reader import ImageReader
 from utils.point_extension import PointExtractor
 
-from project2_warp.image_warp import get_homography
+from project2_warp.image_warp import get_homography, warp_image
 
 
 def main(image_src="src.png", image_dst="dst.png"):
@@ -24,6 +24,14 @@ def main(image_src="src.png", image_dst="dst.png"):
     dst_points = image_dst.get_current_points()
 
     transform = get_homography(src_points, dst_points)
+
+    result_array = warp_image(image_src.image_array, image_dst.image_array, transform)
+
+    image_result = ImageReader(
+        image_array=result_array,
+        name="result"
+    )
+    image_result.imshow()
 
 
 if __name__ == '__main__':

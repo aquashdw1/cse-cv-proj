@@ -42,3 +42,28 @@ def get_homography(src_points, dst_points):
     ])
 
 
+def warp_image(src, dst, transform):
+    matrix_h_inv = nplin.inv(transform)
+    for height in range(dst.shape[0]):
+        for width in range(dst.shape[1]):
+            tmp_coor = np.matmul(matrix_h_inv, np.array([width, height, 1]))
+            tmp_coor /= tmp_coor[2]
+            trans_coor = [tmp_coor[0], tmp_coor[1]]
+            tx, ty = round(trans_coor[0]), round(trans_coor[1])
+            a, b = trans_coor[0] - tx, trans_coor[1] - ty
+
+            if 0 <= tx < src.shape[1] - 1 and 0 <= ty < src.shape[0] - 1:
+                for i in range(3):
+                    # test = \
+                    #     ((1 - a) * (1 - b)) * src[ty, tx] + \
+                    #     (a * (1 - b)) * src[ty, tx + 1] + \
+                    #     ((1 - a) * b) * src[ty + 1, tx] + \
+                    #     (a * b) * src[ty + 1, tx + 1]
+                    # print(test)
+                    dst[height, width] = \
+                        ((1-a) * (1-b)) * src[ty, tx] + \
+                        (a * (1-b)) * src[ty, tx + 1] + \
+                        ((1-a) * b) * src[ty + 1, tx] + \
+                        (a * b) * src[ty + 1, tx + 1]
+
+    return dst
