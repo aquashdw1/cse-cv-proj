@@ -10,6 +10,7 @@ class PointExtractor(ImageReader):
             image_filename: str = None,
             image_file: bytes = None,
             image_array=None,
+            indicator_radius=50,
             name: str = "no_name"
     ):
         super().__init__(
@@ -19,6 +20,7 @@ class PointExtractor(ImageReader):
             name=name
         )
         self.points = []
+        self.indicator_radius=indicator_radius
         self.image_with_points = np.copy(self.image_array)
 
     def set_points(self, point_count: int):
@@ -26,8 +28,8 @@ class PointExtractor(ImageReader):
 
         def point_click(event, x, y, flags, param):
             if event == cv2.EVENT_LBUTTONDOWN:
-                cv2.circle(self.image_with_points, (x, y), 50, (255, 0, 0), 10)
-                cv2.circle(self.image_with_points, (x, y), 5, (255, 255, 255), -1)
+                cv2.circle(self.image_with_points, (x, y), self.indicator_radius, (255, 0, 0), int(self.indicator_radius / 5))
+                cv2.circle(self.image_with_points, (x, y), int(self.indicator_radius / 10), (255, 255, 255), -1)
                 self.points.append((x, y))
                 cv2.imshow(self.name, self.image_with_points)
 
