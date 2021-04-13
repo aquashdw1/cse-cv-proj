@@ -6,16 +6,16 @@ from utils.point_extension import PointExtractor
 from project1_hog.gradient_histogram import get_grad_hist, variance_check
 
 
-def main():
+def main(image_first="1st.jpg", image_second="2nd.jpg"):
     image_first = PointExtractor(
-        image_filename="1st.jpg",
+        image_filename=image_first,
         name="test1"
     )
 
     image_first.set_points(4)
 
     image_second = PointExtractor(
-        image_filename="2nd.jpg",
+        image_filename=image_second,
         name="test2"
     )
 
