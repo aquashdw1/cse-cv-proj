@@ -31,5 +31,14 @@ def get_homography(src_points, dst_points):
          [-x4, -y4, -1, 0, 0, 0, x4 * xp4, y4 * xp4, xp4],
          [0, 0, 0, -x4, -y4, -1, x4 * yp4, y4 * yp4, yp3]
     ], np.int32)
+    matrix_u, matrix_s, matrix_vt = nplin.svd(matrix_h)
+
+    vt_column = matrix_vt[8] / matrix_vt[8][0]
+
+    return np.array([
+        [vt_column[0], vt_column[1], vt_column[2]],
+        [vt_column[3], vt_column[4], vt_column[5]],
+        [vt_column[6], vt_column[7], vt_column[8]]
+    ])
 
 

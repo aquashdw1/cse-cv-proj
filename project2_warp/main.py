@@ -23,9 +23,7 @@ def main(image_src="src.png", image_dst="dst.png"):
     image_dst.set_points(4)
     dst_points = image_dst.get_current_points()
 
-    print(src_points)
-    print(dst_points)
-    get_homography(src_points, dst_points)
+    transform = get_homography(src_points, dst_points)
 
 
 if __name__ == '__main__':
