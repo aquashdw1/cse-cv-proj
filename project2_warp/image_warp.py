@@ -1,4 +1,3 @@
-import cv2
 import numpy as np
 import numpy.linalg as nplin
 
@@ -29,7 +28,7 @@ def get_homography(src_points, dst_points):
          [-x3, -y3, -1, 0, 0, 0, x3 * xp3, y3 * xp3, xp3],
          [0, 0, 0, -x3, -y3, -1, x3 * yp3, y3 * yp3, yp3],
          [-x4, -y4, -1, 0, 0, 0, x4 * xp4, y4 * xp4, xp4],
-         [0, 0, 0, -x4, -y4, -1, x4 * yp4, y4 * yp4, yp3]
+         [0, 0, 0, -x4, -y4, -1, x4 * yp4, y4 * yp4, yp4]
     ], np.int32)
     matrix_u, matrix_s, matrix_vt = nplin.svd(matrix_h)
 
@@ -54,16 +53,10 @@ def warp_image(src, dst, transform):
 
             if 0 <= tx < src.shape[1] - 1 and 0 <= ty < src.shape[0] - 1:
                 for i in range(3):
-                    # test = \
-                    #     ((1 - a) * (1 - b)) * src[ty, tx] + \
-                    #     (a * (1 - b)) * src[ty, tx + 1] + \
-                    #     ((1 - a) * b) * src[ty + 1, tx] + \
-                    #     (a * b) * src[ty + 1, tx + 1]
-                    # print(test)
-                    dst[height, width] = \
-                        ((1-a) * (1-b)) * src[ty, tx] + \
-                        (a * (1-b)) * src[ty, tx + 1] + \
-                        ((1-a) * b) * src[ty + 1, tx] + \
-                        (a * b) * src[ty + 1, tx + 1]
+                    dst[height, width, i] = round(
+                        ((1-a) * (1-b)) * src[ty, tx, i] +
+                        (a * (1-b)) * src[ty, tx + 1, i] +
+                        ((1-a) * b) * src[ty + 1, tx, i] +
+                        (a * b) * src[ty + 1, tx + 1, i])
 
     return dst
