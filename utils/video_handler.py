@@ -1,6 +1,7 @@
 import os
 import cv2
 
+
 class VideoHandler:
     def __init__(
             self,
@@ -26,6 +27,7 @@ class VideoHandler:
                 self.frames.append(frame)
             i += 1
         print("extracted total {} frames".format(len(self.frames)))
+        capture.release()
 
     def check_frames(self):
 
@@ -62,7 +64,7 @@ class VideoHandler:
 
 
 if __name__ == '__main__':
-    video_handler = VideoHandler("/Users/aquashdw/Movies/baseball_videos/2021-05-25 09-56-41.mkv")
+    video_handler = VideoHandler("/Users/aquashdw/Movies/baseball_videos/2021-05-25 09-57-15.mkv")
     video_handler.extract_frame_arrays()
     # video_handler.check_frames()
     video_handler.save_to()
