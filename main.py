@@ -1,4 +1,5 @@
 import math
+import cv2
 
 from project1_hog import main as hog_main
 from project2_warp import main as warp_main
@@ -6,7 +7,7 @@ from project2_warp import main as warp_main
 from utils.point_extension import PointExtractor
 from utils.image_reader import ImageReader
 
-TARGET_IMAGE = "utils/results/kershaw_dodgers_1/0.jpg"
+TARGET_IMAGE = "utils/results/skydome_1/0.jpg"
 
 if __name__ == '__main__':
     # hog_main.main(image_first="project1_hog/1st.jpg", image_second="project1_hog/2nd.jpg")
@@ -68,3 +69,12 @@ if __name__ == '__main__':
     display_image.draw_line((low_left[0], low_left[1]), (low_left[0], high_right[1]))
     display_image.draw_line((low_left[0], low_left[1]), (high_right[0], low_left[1]))
     display_image.imshow()
+
+    actual_strike_bot = abs(low_left[1] - home_points[1][1]) * (actual_distance / pixel_distance)
+    actual_strike_height = abs(low_left[1] - high_right[1]) * (actual_distance / pixel_distance)
+    actual_strike_width = abs(low_left[0] - high_right[0]) * (actual_distance / pixel_distance)
+    print("actual strike zone start bottom: {}cm".format(round(actual_strike_bot, 2)))
+    print("strike zone height: {}cm".format(round(actual_strike_height, 2)))
+    print("strike zone width: {}cm".format(round(actual_strike_width)))
+
+    # cv2.imwrite("out_1.jpg", display_image.image_array)
