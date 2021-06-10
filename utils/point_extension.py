@@ -53,3 +53,6 @@ class PointExtractor(ImageReader):
 
     def get_current_points(self):
         return self.points
+
+    def destroy_window(self):
+        cv2.destroyWindow(self.name)
